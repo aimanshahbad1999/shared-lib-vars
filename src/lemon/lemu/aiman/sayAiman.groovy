@@ -1,8 +1,7 @@
 #!/usr/bin/env groovy
 
 public class sayAiman{
-    def name="Aiman"
-    def login(){
+    def login(name="Default"){
     if(name=="Aiman"){
         return "Welcome Aiman"
     }else{
