@@ -2,6 +2,24 @@
 
 def call(String name = 'Student') {
     echo "Hello, ${name}."
+
+	node{
+    stage("First Stage"){
+        print("first")
+        echo "Aiman"
+        sh "mkdir aiman"
+        
+    }
+    stage("Second Stage"){
+        print("Second")
+        
+    }
+    stage("Third Stage"){
+        print("Third")
+    }
+}
+
+
 	// if(name=='Student'){
 	// 	pipeline{
 	// 		agent any
