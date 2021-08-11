@@ -8,6 +8,10 @@ public class sayAiman{
         return "Enter Valid Name"
     }
     }
+
+    def welcome(){
+        return "Hey hiii Aiman"
+    }
 }
 
 
