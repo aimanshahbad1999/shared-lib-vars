@@ -25,23 +25,22 @@ public class sayAiman{
 			}
 		}
     }
-
-    def other(){
-        node{
-			stage("First"){
-				print("first")
-				echo "Aiman"
-				sh "mkdir aiman"
+    // def other(){
+    //     node{
+	// 		stage("First"){
+	// 			print("first")
+	// 			echo "Aiman"
+	// 			sh "mkdir aiman"
 				
-			}
-			stage("Second Stage"){
-				print("Second")
+	// 		}
+	// 		stage("Second Stage"){
+	// 			print("Second")
 				
-			}
-			stage("Third Stage"){
-				print("Third")
-			}
-    }
+	// 		}
+	// 		stage("Third Stage"){
+	// 			print("Third")
+	// 		}
+    // }
 }
 
 
