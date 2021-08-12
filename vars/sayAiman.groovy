@@ -17,6 +17,7 @@ def call(String name = 'Student') {
 			stage("Third Stage"){
 				print("Third")
 			}
+		}
 	}else{
 		pipeline{
 		agent any
