@@ -10,6 +10,7 @@ public class sayAiman{
 		// else{
 		// 	return "Enter valid name"
 		// }
+		return '''
         pipeline{
 		agent any
 		stages{
@@ -29,7 +30,7 @@ public class sayAiman{
 				}
 			}
 			}
-		}
+		}'''
     }
     // def other(){
     //     node{
