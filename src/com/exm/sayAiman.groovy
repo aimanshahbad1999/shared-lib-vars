@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+package com.exm
+
 public class sayAiman{
     def student(){
         pipeline{
