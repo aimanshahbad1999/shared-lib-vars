@@ -1,18 +1,18 @@
 def libPackage=Library('revision1-vars@master')
 
-def lib=libPackage.src.com.exm
+def lib=libPackage.exm
 
-def final=lib.common.new().get()
+def final1=lib.common.new().get()
 
 
 node{
     stage("Login"){
-	final.sayAiman("aiman")
+	final1.sayAiman("aiman")
       
         
     }
     stage("Student"){
-        final.sayAiman("student")
+        final1.sayAiman("student")
         
     }
 }
