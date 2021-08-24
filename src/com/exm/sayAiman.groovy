@@ -2,8 +2,8 @@
 
 package com.exm
 
-public class sayAiman{
-    def login(name="Default"){
+
+def login(name="Default"){
 		if(name=="Aiman"){
 			return "Hey hiii ${name}"
 		}
@@ -11,6 +11,5 @@ public class sayAiman{
 			return "Enter valid name"
 		}
     }   
-}
 
 

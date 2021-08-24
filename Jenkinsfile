@@ -1,16 +1,18 @@
-@Library('revision1-vars@master')
-@Library('revision1-src@master')
+def libPackage=Library('revision1-vars@master')
 
-import com.exm.sayAiman
-def obj1=new sayAiman()
+def lib=libPackage.exm
+
+def final=lib.common.new().get()
+
 
 node{
     stage("Login"){
-        print obj1.login("Aiman")
+	final.sayAiman("aiman")
+      
         
     }
     stage("Student"){
-        sayAiman "Student"
+        final.sayAiman("student")
         
     }
 }
