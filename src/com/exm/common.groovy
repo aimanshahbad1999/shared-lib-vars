@@ -3,7 +3,7 @@ package com.exm
 
 def get() {
   return [
-      sayAiman: new sayAiman()
+      say: new sayAiman()
   ]
 }
 
