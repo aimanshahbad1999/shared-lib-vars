@@ -1,6 +1,6 @@
 def libPackage=Library('revision1-vars@master')
 
-def lib=libPackage.exm
+def lib=libPackage.com.exm
 
 def final1=lib.common.new().get()
 
