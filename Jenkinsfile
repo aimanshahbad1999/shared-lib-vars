@@ -2,7 +2,7 @@ def libPackage=Library('revision1-vars@master')
 
 def lib=libPackage.com.exm
 
-def final1=lib.common.new().get()
+def final1=lib.Common.new().get()
 
 
 node{
