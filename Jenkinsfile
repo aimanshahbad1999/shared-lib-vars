@@ -1,4 +1,4 @@
-def libPackage=Library('revision1-vars@master')
+def libPackage=@Library('revision1-vars@master')
 
 def lib=libPackage.exm
 
