@@ -1,0 +1,30 @@
+package com.dotdash.devops.jenkins.commons
+
+/**
+ * Generate a map of all utilities for general use. The use of this method is designed to avoid the need to instantiate any of the included utilities across all pipelines, individually.
+ *
+ * @return map of instances
+ */
+def get() {
+  return [
+      ActiveChoice: new ActiveChoiceUtilities(),
+      Constants: new Constants(),
+      Consul: new ConsulUtilities(),
+      Docker: new DockerUtilities(),
+      DockerCompose: new DockerComposeUtilities(),
+      Iam: new IamUtilities(),
+      Input: new InputUtilities(),
+      Jenkins: new JenkinsUtilities(),
+      Logger: new LogUtilities(),
+      Parameters: new ParameterUtilities(),
+      Pipeline: new PipelineUtilities(),
+      Selene: new SeleneUtilities(),
+      Slack: new SlackUtilities(),
+      InputParameterType: InputParameterType,
+      BitbucketUtilities: new BitbucketUtilities(),
+      UrlUtilities: new UrlUtilities()
+  ]
+}
+
+return this
+
