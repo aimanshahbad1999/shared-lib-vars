@@ -9,7 +9,7 @@ def get() {
   return [
       Parameters: new Parameter(),
       Paramutil: new ParameterUtilities(), 
-       InputParameterType: InputParameterType
+      InputParameterType: InputParameterType
   ]
 }
 

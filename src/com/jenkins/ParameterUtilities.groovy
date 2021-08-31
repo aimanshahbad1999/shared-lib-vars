@@ -37,26 +37,26 @@ def activeChoicesParameter(parameterName, description, script) {
  * @param description
  * @return
  */
-def activeChoiceParamWithAvailBranches(credentials, project, repo, name, description) {
-  def activeChoice = new ActiveChoiceUtilities()
-  def script = activeChoice.getBranchesListFromRepo(project, repo, credentials)
-  return [
-      $class     : 'ChoiceParameter',
-      choiceType : 'PT_SINGLE_SELECT',
-      description: description,
-      filterable : true,
-      name       : name,
-      script     : [
-          $class        : 'GroovyScript',
-          fallbackScript: [classpath: [], sandbox: false, script: ''],
-          script        : [
-              classpath: [],
-              sandbox  : false,
-              script   : script
-          ]
-      ]
-  ]
-}
+// def activeChoiceParamWithAvailBranches(credentials, project, repo, name, description) {
+//   def activeChoice = new ActiveChoiceUtilities()
+//   def script = activeChoice.getBranchesListFromRepo(project, repo, credentials)
+//   return [
+//       $class     : 'ChoiceParameter',
+//       choiceType : 'PT_SINGLE_SELECT',
+//       description: description,
+//       filterable : true,
+//       name       : name,
+//       script     : [
+//           $class        : 'GroovyScript',
+//           fallbackScript: [classpath: [], sandbox: false, script: ''],
+//           script        : [
+//               classpath: [],
+//               sandbox  : false,
+//               script   : script
+//           ]
+//       ]
+//   ]
+// }
 
 /**
  * Provides a cascade choice parameter
@@ -94,25 +94,25 @@ def cascadeChoicesParameter(parameterName, description, script, referencedParame
  * @param paramName - the variable name for the param (default ENV)
  * @return
  */
-def get_env(accountName, region, paramName = 'ENV') {
-  def consulInstanceConfig = new Constants().getConsulConfig()[accountName][region]
-  def consulUrl = consulInstanceConfig.url
-  def consulToken = consulInstanceConfig.token
-  def credentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
-      org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl.class,
-      jenkins.model.Jenkins.instance
-  )
-  def matchingCredentials = credentials.findResult { it.id == consulToken ? it : null }
-  def token = hudson.util.Secret.toString(matchingCredentials.getSecret())
-  def script = """
-    import groovy.json.JsonSlurper
-    def response = "${consulUrl}/v1/kv/environments/?token=${token}&keys".toURL().getText()
-    def json = new JsonSlurper().parseText(response)""" + '''
-    def env = json.findAll{ env -> env.contains("${PROJECT}/url") && !env.contains("history")}.collect{item -> item.split("/")[1]}
-    return env
-  '''
-  return cascadeChoicesParameter(paramName, 'Application ENV', script, 'PROJECT')
-}
+// def get_env(accountName, region, paramName = 'ENV') {
+//   def consulInstanceConfig = new Constants().getConsulConfig()[accountName][region]
+//   def consulUrl = consulInstanceConfig.url
+//   def consulToken = consulInstanceConfig.token
+//   def credentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+//       org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl.class,
+//       jenkins.model.Jenkins.instance
+//   )
+//   def matchingCredentials = credentials.findResult { it.id == consulToken ? it : null }
+//   def token = hudson.util.Secret.toString(matchingCredentials.getSecret())
+//   def script = """
+//     import groovy.json.JsonSlurper
+//     def response = "${consulUrl}/v1/kv/environments/?token=${token}&keys".toURL().getText()
+//     def json = new JsonSlurper().parseText(response)""" + '''
+//     def env = json.findAll{ env -> env.contains("${PROJECT}/url") && !env.contains("history")}.collect{item -> item.split("/")[1]}
+//     return env
+//   '''
+//   return cascadeChoicesParameter(paramName, 'Application ENV', script, 'PROJECT')
+// }
 
 /**
 * This method will append default parameters to existing job parameters
@@ -264,72 +264,72 @@ def inputFileParameter(values = [:]){
 * @param values HashMap should have keys: branchParamName, branchParamScmProject, branchParamScmRepo
 * @return Jenkins ActiveChoice CascadeChoiceParameters for branch selection
 */
-def branchSelectionParameter(values = [:]){
-  def paramArray= []
-  def activeChoiceUtils = new ActiveChoiceUtilities()
+// def branchSelectionParameter(values = [:]){
+//   def paramArray= []
+//   def activeChoiceUtils = new ActiveChoiceUtilities()
 
-  if(values.name){
-    paramArray.push(activeChoiceParameter([
-      "paramType": InputParameterType.ACTIVECHOICEPARAMETER,
-      "name": values.name,
-      "choiceType": "PT_SINGLE_SELECT",
-      "description": (values.description? values.description: "Active choice parameter to list branches from desired repositories"),
-      "filterable": "true",
-      "referencedParameters": "",
-      "script" : activeChoiceUtils.getBranchesListFromRepo(values.branchParamScmProject? values.branchParamScmProject: params.scmProject, values.branchParamScmRepo? values.branchParamScmRepo : params.scmRepoName)
-    ]))
-  }
-  return paramArray
-}
+//   if(values.name){
+//     paramArray.push(activeChoiceParameter([
+//       "paramType": InputParameterType.ACTIVECHOICEPARAMETER,
+//       "name": values.name,
+//       "choiceType": "PT_SINGLE_SELECT",
+//       "description": (values.description? values.description: "Active choice parameter to list branches from desired repositories"),
+//       "filterable": "true",
+//       "referencedParameters": "",
+//       "script" : activeChoiceUtils.getBranchesListFromRepo(values.branchParamScmProject? values.branchParamScmProject: params.scmProject, values.branchParamScmRepo? values.branchParamScmRepo : params.scmRepoName)
+//     ]))
+//   }
+//   return paramArray
+// }
 
 /**
 *
 * @param values HashMap should have keys: name, description, accountName, region, squadronEnvParamName
 * @return Jenkins ActiveChoice CascadeChoiceParameters for vertical selection
 */
-def verticalSelectionParameter(values = [:]) {
-  def paramArray = []
-  def activeChoiceUtils = new ActiveChoiceUtilities()
-  if(values.name) {
-    paramArray.push(activeChoiceParameter([
-      "paramType": InputParameterType.ACTIVECHOICEPARAMETER,
-      "name": values.name,
-      "choiceType": values.choiceType,
-      "description": values.description ? values.description : "Selene vertical name",
-      "filterable": true,
-      "referencedParameters": values.squadronEnvParamName,
-      "script" : activeChoiceUtils.getVerticalListFromSelene(values.accountName, values.region, values.squadronEnvParamName)
-    ]))
-  }
-  return paramArray
-}
+// def verticalSelectionParameter(values = [:]) {
+//   def paramArray = []
+//   def activeChoiceUtils = new ActiveChoiceUtilities()
+//   if(values.name) {
+//     paramArray.push(activeChoiceParameter([
+//       "paramType": InputParameterType.ACTIVECHOICEPARAMETER,
+//       "name": values.name,
+//       "choiceType": values.choiceType,
+//       "description": values.description ? values.description : "Selene vertical name",
+//       "filterable": true,
+//       "referencedParameters": values.squadronEnvParamName,
+//       "script" : activeChoiceUtils.getVerticalListFromSelene(values.accountName, values.region, values.squadronEnvParamName)
+//     ]))
+//   }
+//   return paramArray
+// }
 
 /**
 *
 * @param values HashMap should have keys: envParamName, envParamAccount, envParamRegion
 * @return Jenkins ActiveChoice CascadeChoiceParameters for environment selection
 */
-def envSelectionParameter(values = [:]){
-  def paramArray= []
-  def pipelineUtils = new PipelineUtilities()
+// def envSelectionParameter(values = [:]){
+//   def paramArray= []
+//   def pipelineUtils = new PipelineUtilities()
 
-  if(values.meta instanceof Collection){
-    values.meta.each{
-      if(it.envParamName){
-        paramArray.push(activeChoiceParameter([
-          "paramType": InputParameterType.ACTIVECHOICEPARAMETER,
-          "name": it.envParamName,
-          "choiceType": "PT_SINGLE_SELECT",
-          "description": it.description? it.description: "Active choice parameter to list squadron environments from desired repositories",
-          "filterable": "true",
-          "referencedParameters": "",
-          "script" : pipelineUtils.getEnvironmentlistByAccountAndRegion(it.envParamAccount, it.envParamRegion)
-        ]))
-      }
-    }
-  }
-  return paramArray
-}
+//   if(values.meta instanceof Collection){
+//     values.meta.each{
+//       if(it.envParamName){
+//         paramArray.push(activeChoiceParameter([
+//           "paramType": InputParameterType.ACTIVECHOICEPARAMETER,
+//           "name": it.envParamName,
+//           "choiceType": "PT_SINGLE_SELECT",
+//           "description": it.description? it.description: "Active choice parameter to list squadron environments from desired repositories",
+//           "filterable": "true",
+//           "referencedParameters": "",
+//           "script" : pipelineUtils.getEnvironmentlistByAccountAndRegion(it.envParamAccount, it.envParamRegion)
+//         ]))
+//       }
+//     }
+//   }
+//   return paramArray
+// }
 
 /**
 * By default files will be uploaded to the s3 bucket. If you want to change this behavior, set `archiveFile` option to `false` in the values object
