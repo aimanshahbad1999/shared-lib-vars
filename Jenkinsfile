@@ -4,11 +4,28 @@ def Commons = commonsPackage.Commons.new().get()
 def inputFile = 'input.txt'
 properties(
   [
-    [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
+    
     buildDiscarder(
 			logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '20')
 		),
     parameters(Commons.Parameters.generateStandardDataInputParams([
+       [
+        "paramType": Commons.InputParameterType.INPUTFILE,
+        "name": "file",
+        "meta": [
+          ['fileName':'list.txt', "additionalMessage": """
+            A text file containing a list of urls followed by the corresponding primary video docId, separated by newline, for documents you would like to process as part of this job.
+            <br />
+            &emsp; Example: https://www.thespruce.com/takeout-copycat-easy-sesame-chicken-4133629,4135314
+            <br />
+            Note: If you want to remove field then please provide list of urls only.
+            <br />
+            &emsp; Example: https://www.thespruce.com/takeout-copycat-easy-sesame-chicken-4133629
+
+          """, 'archiveFile': true],
+        ],
+      ], 
+        
       [
         "paramType": Commons.InputParameterType.INPUTFILE_WITH_STRING,
         "name": "file",
@@ -36,13 +53,22 @@ properties(
         "defaultValue": "",
         "trim":"true",
         "required":"true"
-      ]
+      ],
+       
     ]))
   ]
 )
 
 node{
-    stage("first"){
+    stage("Print File Data"){
         println("Hey hiii")
+        sh "pwd"
+        println "${params.docId}"
+        
+        File myfile=new File("$workspace/demo.txt")
+      
+       println(myfile.text)
+        
+        
     }
 }
