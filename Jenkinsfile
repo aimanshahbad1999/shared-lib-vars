@@ -37,10 +37,10 @@ properties(
                 Do not include a separate row for the column names! Mention each docId in separate line.
             """,
             'archiveFile': true,
-            'stringPeerName':'docId',
+            'defaultValue': "demo.txt",
+            'stringPeerName':'Enter File Name',
             'stringPeerDescription':"""
-                Enter single docid only. e.g. 767857
-                <br /><b>Note:</b>Either provide docId here or use input file in <b>Input request</b> after you start the build
+                Enter File Name to Print File Data
                 """,
             'stringPeerNeedsTextParam':false
           ]
