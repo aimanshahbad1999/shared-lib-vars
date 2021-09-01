@@ -346,7 +346,7 @@ def inputFileParameterWithString(values = [:]) {
           values.meta.each{
             if(it.stringPeerName){
               if(it.stringPeerNeedsTextParam == true)
-                paramArray.push(textParameter(["name": it.stringPeerName, "description": it.stringPeerDescription, "defaultValue": "demo.txt"]))
+                paramArray.push(textParameter(["name": it.stringPeerName, "description": it.stringPeerDescription, "defaultValue": it.defaultValue]))
               else
                 paramArray.push(stringParameter(["name": it.stringPeerName, "description": it.stringPeerDescription, "defaultValue": "", "trim": true]))
             }
