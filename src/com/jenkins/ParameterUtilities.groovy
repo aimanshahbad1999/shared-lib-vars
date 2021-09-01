@@ -247,9 +247,7 @@ def inputFileParameter(values = [:]){
     if (values.meta){
         def hiddenFileParamMetaJson = JsonOutput.toJson(values.meta)
         return hiddenParameter(["name":"fileParamMeta",
-          "defaultValue":"""
-          ${hiddenFileParamMetaJson.toString()}
-          """,
+          "defaultValue":"demo1.txt",
           "description": "File parameters meta info"])
     }else{
       return []
