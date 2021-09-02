@@ -7,6 +7,7 @@ def defaultChoice = "'--Select--'"
 
 def listForChoices = [defaultChoice, "'Pune'", "'Mumbai'", "'Solapur'"]
 
+def ParamTypes = Commons.InputParameterType
 
 properties(
   [
@@ -74,20 +75,30 @@ properties(
 )
 
 node{
-    stage("User Details"){
+    stage("Email Verification"){
         println("${params.Email}")   
         println("${params.city}")
     }
-    stage("Printing DemoFile Data"){
+    stage("Printing Demo File Data"){
         path="${params.File}"
         File myfile=new File("$workspace/${path}")
+        
         println(myfile.text)
         print("${params.RemoveFile}")
     }
      stage("Printing inputfile Data"){
+        
+        def filename=""
+        
         path="${params.fileParamMeta}"
-        print(path)
-        File myfile1=new File("$workspace/${path}")
+       
+        def jsonObj = readJSON text: path
+        
+        for(i in jsonObj){
+            filename=i.fileName
+        }
+        
+        File myfile1=new File("$workspace/${filename}")
         println(myfile1.text)
     }
 }
