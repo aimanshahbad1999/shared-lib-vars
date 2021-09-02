@@ -2,13 +2,11 @@ def commonsLibrary = library('revision1-src')
 def commonsPackage = commonsLibrary.com.jenkins
 def Commons = commonsPackage.Commons.new().get()
 
-def inputFile = 'input.txt'
 
 def defaultChoice = "'--Select--'"
 
 def listForChoices = [defaultChoice, "'Pune'", "'Mumbai'", "'Solapur'"]
 
-def ParamTypes = Commons.InputParameterType
 
 properties(
   [
@@ -29,7 +27,7 @@ properties(
         "name": "file",
         "meta": [
           [
-           
+           'fileName': 'demo.txt',
             'additionalMessage': "",
             'archiveFile': true,
             'stringPeerName':'File',
@@ -76,18 +74,18 @@ properties(
 )
 
 node{
-    stage("Email Verification"){
+    stage("User Details"){
         println("${params.Email}")   
         println("${params.city}")
     }
-    stage("Printing Demo File Data"){
+    stage("Printing DemoFile Data"){
         path="${params.File}"
         File myfile=new File("$workspace/${path}")
         println(myfile.text)
         print("${params.RemoveFile}")
     }
      stage("Printing inputfile Data"){
-        path="${params.file1}"
+        path="${params.fileParamMeta}"
         print(path)
         File myfile1=new File("$workspace/${path}")
         println(myfile1.text)
